@@ -38,12 +38,8 @@ if($_FILES["path"]["type"] == "application/vnd.ms-excel"
 	    echo "Stored in: " . $_FILES["path"]["tmp_name"];
 
 	    echo '<br> Uspeh <br>'; 
-	    
-	    //POMEMBNO
           //  $user_id=$_SESSION['user_id'];
             $user_id=1; //za zbrisat pol
-            
-            
             if (!file_exists("upload/$user_id/")) 
                 {
     mkdir("upload/$user_id/", 0777, true);
@@ -73,7 +69,7 @@ echo "<br><br><a href=upload.php>Nazaj</a>";
 
 
 
-
+echo"<br>";
 $inputFileName = "upload/$user_id/" . $_FILES["path"]["name"];
 echo $inputFileName;
 //  Read your Excel workbook
@@ -150,16 +146,10 @@ VALUES ('$value2' , '$value3' , '$value4')";
         
  
     }
-}
+    
+} 
+unlink("upload/$user_id/" . $_FILES["path"]["name"]);
        
-
-
-
-
-
-
-
-
 
 
 
