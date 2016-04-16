@@ -93,7 +93,7 @@ for ($row = 1; $row <= $highestRow; $row++){
                                     TRUE,
                                     FALSE);
     //  Insert row data array into your database of choice here
-    echo '<pre>'; print_r($rowData); echo '</pre><br><br>';
+    //echo '<pre>'; print_r($rowData); echo '</pre><br><br>';
     foreach ($rowData as $value) {
         
         
@@ -101,14 +101,14 @@ for ($row = 1; $row <= $highestRow; $row++){
         
         
         
-        $value0 = mysqli_real_escape_string($link,$value[0]);
-        $sql = "INSERT INTO proizvajalec (ime)
-VALUES ('$value0')";
+        $valuepro = mysqli_real_escape_string($link,$value[0]);
+        $sql = "INSERT INTO proizvajalci (ime)
+VALUES ('$valuepro')";
        
         if (mysqli_query($link, $sql)) {
     echo "New record created successfully";
 } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($link);
+   // echo "Error: " . $sql . "<br>" . mysqli_error($link);
 }
         echo '<br>';
         
@@ -119,23 +119,27 @@ VALUES ('$value0')";
         
         
         
-        $value1 = mysqli_real_escape_string($link,$value[1]);
-        $sql = "INSERT INTO kategorija (ime)
-VALUES ('$value1')";
+        $valuekat = mysqli_real_escape_string($link,$value[1]);
+        $sql = "INSERT INTO kategorije (ime)
+VALUES ('$valuekat')";
         
         if (mysqli_query($link, $sql)) {
     echo "New record created successfully";
 } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($link);
+   // echo "Error: " . $sql . "<br>" . mysqli_error($link);
 }
         echo '<br>';
+        $valuesifra=md5(uniqid());
         
-        
-        $value2 = mysqli_real_escape_string($link,$value[2]);
-        $value3 = mysqli_real_escape_string($link,$value[3]);
-        $value4 = mysqli_real_escape_string($link,$value[4]);
-        $sql = "INSERT INTO ostalo (cena,sifra,ime)
-VALUES ('$value2' , '$value3' , '$value4')";
+        $valuecena = mysqli_real_escape_string($link,$value[2]);
+        $valueime = mysqli_real_escape_string($link,$value[3]);
+        $valuekid = (mysqli_query($link,"SELECT id FROM kategorije WHERE ('$valuekat'=ime)"));
+        $valuepid = (mysqli_query($link,"SELECT id FROM proizvajalci WHERE ('$valuepro'=ime)"));
+        $rowkid = mysqli_fetch_array($valuekid);
+        $rowpid = mysqli_fetch_array($valuepid);
+    
+        $sql = "INSERT INTO ostalo (cena,sifra,ime,k_id,p_id)
+VALUES ('$valuecena' , '$valuesifra' , '$valueime' , '$rowkid[0]' , '$rowpid[0]')";
         
         if (mysqli_query($link, $sql)) {
     echo "New record created successfully";

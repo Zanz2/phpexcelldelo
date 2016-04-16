@@ -5,7 +5,7 @@
 
 	       
 
-	        <label>Izberite zip datoteko (max 1.5 Mb)</label>
+	        <label>Izberite  tabelo (najbolj optimalna je excel tabela (max 1.5 Mb))</label>
 
 	        <br>
 
