@@ -1,11 +1,12 @@
 <?php  
+header('Content-Type: text/html; charset=utf-8');
  $connect = mysqli_connect("localhost", "root", "burek123", "phpexcelltest");  
  $output = '';  
  $sql = "SELECT * FROM ostalo ORDER BY id DESC";  
  $result = mysqli_query($connect, $sql);  
  $output .= '  
       <div class="table-responsive">  
-           <table class="table table-bordered">  
+           <table class="table table-bordered" id="table2excel">  
                 <tr>  
                      <th width="10%">Id</th>  
                      <th width="10%">Ime</th>  
@@ -53,3 +54,21 @@
       </div>';  
  echo $output;  
  ?>  
+
+<!--FUNKCIJA ZA TABLE -> EXCEL -->
+ <script type="text/javascript">
+        var tableToExcel = (function() {
+          var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+            , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+          return function(table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+            window.location.href = uri + base64(format(template, ctx))
+          }
+        })()
+        </script>
+        
+        
+        <button onclick="tableToExcel(table2excel);">Excel izvoz</button> 
